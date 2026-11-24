@@ -1,6 +1,3 @@
-import {Config} from '@remotion/cli/config';
-
-Config.setVideoImageFormat('jpeg');
-Config.setOverwriteOutput(true);
-Config.setChromiumOpenGlRenderer('swangle');
-Config.setConcurrency(2);
+import { Config } from "@remotion/cli/config";
+Config.setChromiumOpenGlRenderer("angle");
+Config.setConcurrency(1);

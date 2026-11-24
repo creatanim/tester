@@ -1,24 +1,20 @@
 {
   "name": "railroads-remake",
-  "version": "1.0.0",
   "private": true,
-  "description": "Visual remake (no audio) of 'Why Perfect Railroads Don't Work' — 720x1280 @30fps, 1955 frames, built from frame-by-frame analysis",
-  "scripts": {
-    "start": "remotion studio src/index.ts",
-    "render": "remotion render src/index.ts Railroads out/railroads_remake.mp4 --gl=swangle"
-  },
+  "type": "module",
   "dependencies": {
-    "@react-three/fiber": "^8.17.10",
-    "@remotion/cli": "^4.0.240",
-    "@remotion/three": "^4.0.240",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "remotion": "^4.0.240",
-    "three": "^0.169.0"
+    "@react-three/fiber": "8.17.10",
+    "@remotion/cli": "4.0.534",
+    "@remotion/google-fonts": "^4.0.534",
+    "@remotion/three": "4.0.534",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "remotion": "4.0.534",
+    "three": "0.170.0"
   },
   "devDependencies": {
-    "@types/react": "^18.3.12",
-    "@types/three": "^0.169.0",
-    "typescript": "^5.6.3"
+    "@types/react": "18.3.12",
+    "@types/three": "0.170.0",
+    "typescript": "5.6.3"
   }
 }

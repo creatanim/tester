@@ -1,15 +1,9 @@
-import React from 'react';
-import {Composition} from 'remotion';
-import {Video} from './Video';
-import {FPS, W, H, TOTAL_FRAMES} from './theme';
+import React from "react";
+import { Composition } from "remotion";
+import { Episode, totalFrames } from "./rail/Episode";
 
-export const RemotionRoot: React.FC = () => (
-  <Composition
-    id="Railroads"
-    component={Video}
-    durationInFrames={TOTAL_FRAMES}
-    fps={FPS}
-    width={W}
-    height={H}
-  />
+export const Root: React.FC = () => (
+  <>
+    <Composition id="Railroads" component={Episode} width={720} height={1280} fps={30} durationInFrames={totalFrames()} defaultProps={{ captions: true }} />
+  </>
 );
