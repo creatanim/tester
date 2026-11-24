@@ -1,108 +1,152 @@
 import React from 'react';
-import {AbsoluteFill, Sequence, useCurrentFrame} from 'remotion';
-import {C, captionAt} from './theme';
 import {
-  CanyonWalk, DesertRise, WhipStation, StationCeremony, WorkersRidge,
-  BossFace, WhipRight, PlatformDeck, LuxuryTrain, ShortLine, Newspaper,
-  SunsetWeird, GapsCoin, BossPleased, DeckChair, HottestDay, Serpent, Explosion,
-} from './scenes2d';
-import {AerialBridge3D, PerfectRR3D, SunsetBridge3D} from './scenes3d';
+  AbsoluteFill,
+  Sequence,
+  useCurrentFrame,
+} from 'remotion';
+import {CAPTIONS, W, H} from './theme';
+import {
+  CanyonWalk,
+  AerialBay,
+  DesertRise,
+  StationApproach,
+  Ceremony,
+  WorkersRidge,
+  BossMeet,
+  PlatformDeck,
+  LuxuryTrain,
+  ShortLine,
+  Newspaper,
+  SunsetWeird,
+  GapsCoin,
+  BossPleased,
+  PerfectRR,
+  DeckChairScene,
+  HottestDay,
+  SunsetBridge,
+  Serpent,
+  Explosion,
+} from './scenes3d';
 
 // ============================================================
-// التايملاين — مطابق 1:1 لتحليل الفيديو الأصلي:
-// كل Sequence يبدأ وينتهي عند نفس الإطار في التحليل (L01–L40)
+// Video.tsx — الجدول الزمني الكامل (1955 إطارًا) + التسميات
 // ============================================================
 
-const Caption: React.FC = () => {
+const Caption: React.FC<{x: number; y: number}> = ({x, y}) => {
   const f = useCurrentFrame();
-  const text = captionAt(f);
+  const item = CAPTIONS.find(([s, e]) => f >= s && f <= e);
+  const text = item ? item[2] : '';
   if (!text) return null;
   return (
-    <div
-      style={{
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        bottom: 318,
-        textAlign: 'center',
-        fontFamily: "'Nunito', 'Arial Black', 'DejaVu Sans', sans-serif",
-        fontWeight: 900,
-        fontSize: 52,
-        color: C.white,
-        WebkitTextStroke: '3px #000',
-        paintOrder: 'stroke fill',
-        textShadow: '0 3px 10px rgba(0,0,0,0.6)',
-        letterSpacing: 0.5,
-      }}
-    >
-      {text}
-    </div>
+    <svg width={W} height={H} style={{position: 'absolute', inset: 0}}>
+      <text
+        x={x}
+        y={y}
+        textAnchor="middle"
+        fontFamily="DejaVu Sans, Arial, sans-serif"
+        fontWeight={900}
+        fontSize={42}
+        fill="#ffffff"
+        stroke="#000000"
+        strokeWidth={8}
+        paintOrder="stroke"
+      >
+        {text}
+      </text>
+    </svg>
   );
 };
 
-// أغشية التلاشٍ (Dissolves) في مواضعها من التحليل
+const capPos = (f: number): {x: number; y: number} => {
+  if (f >= 348 && f < 408) return {x: W / 2, y: 315};
+  if (f >= 454 && f < 480) return {x: W / 2, y: 615};
+  if (f >= 481 && f < 545) return {x: W / 2, y: 1058};
+  return {x: W / 2, y: 318};
+};
+
+// رشقات الضوء البيضاء (وميض)
+const Flashes: React.FC = () => {
+  const f = useCurrentFrame();
+  const flashes: Array<[number, number]> = [
+    [221, 226], [300, 302], [685, 691], [808, 813], [1321, 1335], [1928, 1932],
+  ];
+  const active = flashes.find(([a, b]) => f >= a && f < b);
+  if (!active) return null;
+  return <AbsoluteFill style={{backgroundColor: '#ffffff', opacity: 0.45}} />;
+};
+
+// خطوط التشويش الحركي (الـويب) — من التحليل (9 مرّات ويب)
+const STREAKS: Array<[number, number]> = [
+  [294, 301], [624, 647], [720, 722], [1005, 1015], [1088, 1103],
+  [1321, 1335], [1512, 1535], [1688, 1735], [1927, 1935],
+];
+
+const Streaks: React.FC = () => {
+  const f = useCurrentFrame();
+  const active = STREAKS.find(([a, b]) => f >= a && f < b);
+  if (!active) return null;
+  return (
+    <AbsoluteFill style={{opacity: 0.5}}>
+      {Array.from({length: 12}).map((_, i) => (
+        <div
+          key={i}
+          style={{
+            position: 'absolute',
+            top: (i * 113) % H,
+            left: 0,
+            width: W,
+            height: 8 + (i % 3) * 6,
+            background: 'linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0) 100%)',
+          }}
+        />
+      ))}
+    </AbsoluteFill>
+  );
+};
+
+// الحجاب: تعتيم/تغميق عند بدايات اللقطات (fading veils)
 const Veils: React.FC = () => {
   const f = useCurrentFrame();
-  const veil = (a: number, b: number) => (f >= a && f <= b ? Math.abs((f - a) / (b - a) - 0.5) * 1.4 : 0);
-  const op = Math.max(
-    veil(404, 409),       // L12 → L13
-    veil(932, 938),       // L24 → L25
-    veil(1432, 1443),     // L32 → L33 (تلاشٍ طويل)
-    veil(1628, 1637),     // شبحي قصير
-    veil(1776, 1785)      // L37 → L38
-  );
-  if (op <= 0) return null;
-  return <AbsoluteFill style={{background: '#e8c0b0', opacity: Math.min(0.85, op)}} />;
+  const fades: Array<[number, number, number]> = [
+    [0, 30, 0.35], [405, 407, 0.1], [627, 648, 0.3], [933, 936, 0.55],
+    [1433, 1441, 0.55], [1778, 1783, 0.4], [1928, 1930, 0.5],
+  ];
+  const hit = fades.find(([a, b]) => f >= a && f < b);
+  if (!hit) return null;
+  const [a, b, max] = hit;
+  const t = (f - a) / (b - a);
+  return <AbsoluteFill style={{backgroundColor: '#2d1d36', opacity: (1 - t) * max}} />;
 };
 
-export const Video: React.FC = () => (
-  <AbsoluteFill style={{backgroundColor: C.black}}>
-    {/* L01–L04 */}
-    <Sequence from={0} durationInFrames={112}><CanyonWalk /></Sequence>
-    {/* L05–L06 (three.js) */}
-    <Sequence from={112} durationInFrames={142}><AerialBridge3D /></Sequence>
-    {/* L07–L08 */}
-    <Sequence from={254} durationInFrames={40}><DesertRise /></Sequence>
-    {/* L09 */}
-    <Sequence from={294} durationInFrames={8}><WhipStation /></Sequence>
-    {/* L10–L11 */}
-    <Sequence from={302} durationInFrames={46}><StationCeremony /></Sequence>
-    {/* L12 */}
-    <Sequence from={348} durationInFrames={60}><WorkersRidge /></Sequence>
-    {/* L13–L16 */}
-    <Sequence from={408} durationInFrames={216}><BossFace /></Sequence>
-    {/* L17 */}
-    <Sequence from={624} durationInFrames={24}><WhipRight /></Sequence>
-    {/* L18–L20 */}
-    <Sequence from={648} durationInFrames={141}><PlatformDeck /></Sequence>
-    {/* L21–L22 */}
-    <Sequence from={789} durationInFrames={67}><LuxuryTrain /></Sequence>
-    {/* L23–L24 */}
-    <Sequence from={856} durationInFrames={80}><ShortLine /></Sequence>
-    {/* L25–L27 */}
-    <Sequence from={936} durationInFrames={152}><Newspaper /></Sequence>
-    {/* L28 */}
-    <Sequence from={1088} durationInFrames={64}><SunsetWeird /></Sequence>
-    {/* L29–L31 */}
-    <Sequence from={1152} durationInFrames={192}><GapsCoin /></Sequence>
-    {/* L32 */}
-    <Sequence from={1344} durationInFrames={96}><BossPleased /></Sequence>
-    {/* L33 (three.js) */}
-    <Sequence from={1440} durationInFrames={144}><PerfectRR3D /></Sequence>
-    {/* L34 */}
-    <Sequence from={1584} durationInFrames={48}><DeckChair /></Sequence>
-    {/* L35–L37 */}
-    <Sequence from={1632} durationInFrames={152}><HottestDay /></Sequence>
-    {/* L38 (three.js) */}
-    <Sequence from={1784} durationInFrames={64}><SunsetBridge3D /></Sequence>
-    {/* L39 */}
-    <Sequence from={1848} durationInFrames={80}><Serpent /></Sequence>
-    {/* L40 */}
-    <Sequence from={1928} durationInFrames={27}><Explosion /></Sequence>
-
-    {/* الانتقالات والتلاشيات */}
-    <Veils />
-    {/* الترجمة كلمة-كلمة (نفس التوقيتات) */}
-    <Caption />
-  </AbsoluteFill>
-);
+export const Video: React.FC = () => {
+  const f = useCurrentFrame();
+  const {x, y} = capPos(f);
+  return (
+    <AbsoluteFill style={{backgroundColor: '#000'}}>
+      <Sequence from={0} durationInFrames={112}><CanyonWalk /></Sequence>
+      <Sequence from={112} durationInFrames={142}><AerialBay /></Sequence>
+      <Sequence from={254} durationInFrames={48}><DesertRise /></Sequence>
+      <Sequence from={302} durationInFrames={12}><StationApproach /></Sequence>
+      <Sequence from={314} durationInFrames={34}><Ceremony /></Sequence>
+      <Sequence from={348} durationInFrames={60}><WorkersRidge /></Sequence>
+      <Sequence from={408} durationInFrames={216}><BossMeet /></Sequence>
+      <Sequence from={624} durationInFrames={165}><PlatformDeck /></Sequence>
+      <Sequence from={789} durationInFrames={67}><LuxuryTrain /></Sequence>
+      <Sequence from={856} durationInFrames={80}><ShortLine /></Sequence>
+      <Sequence from={936} durationInFrames={152}><Newspaper /></Sequence>
+      <Sequence from={1088} durationInFrames={64}><SunsetWeird /></Sequence>
+      <Sequence from={1152} durationInFrames={192}><GapsCoin /></Sequence>
+      <Sequence from={1344} durationInFrames={96}><BossPleased /></Sequence>
+      <Sequence from={1440} durationInFrames={144}><PerfectRR /></Sequence>
+      <Sequence from={1584} durationInFrames={48}><DeckChairScene /></Sequence>
+      <Sequence from={1632} durationInFrames={152}><HottestDay /></Sequence>
+      <Sequence from={1784} durationInFrames={64}><SunsetBridge /></Sequence>
+      <Sequence from={1848} durationInFrames={80}><Serpent /></Sequence>
+      <Sequence from={1928} durationInFrames={27}><Explosion /></Sequence>
+      <Streaks />
+      <Flashes />
+      <Veils />
+      <Caption x={x} y={y} />
+    </AbsoluteFill>
+  );
+};
