@@ -1,9 +1,30 @@
 // One-word captions (the measured style: one or two words at a time, heavy white type, dark outline, ~70% down).
 import React from "react";
-import { AbsoluteFill, useCurrentFrame, useVideoConfig, interpolate } from "remotion";
-import { loadFont } from "@remotion/google-fonts/Montserrat";
+import { AbsoluteFill, useCurrentFrame, useVideoConfig, interpolate, delayRender, continueRender } from "remotion";
 
-const { fontFamily } = loadFont("normal", { weights: ["800", "900"], subsets: ["latin"] });
+// Montserrat 800/900 — تحميل آمن بلا اعتماد على @remotion/google-fonts:
+// يُحمَّل الخط من Google Fonts مع ضمان الاستمرار خلال 8 ثوانٍ حتى لو تعذّر الشبكة (يُستخدم خط احتياطي).
+const FALLBACK = `"Montserrat", "Arial Black", "Helvetica Neue", sans-serif`;
+let fontFamily = FALLBACK;
+if (typeof document !== "undefined" && !(window as any).__montLoaded) {
+  (window as any).__montLoaded = true;
+  const handle = delayRender("montserrat-font", { timeoutInMilliseconds: 60000 });
+  let settled = false;
+  const done = () => { if (!settled) { settled = true; continueRender(handle); } };
+  try {
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = "https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=block";
+    document.head.appendChild(link);
+    const timer = setTimeout(done, 8000);
+    Promise.all([
+      (document as any).fonts.load('800 70px "Montserrat"'),
+      (document as any).fonts.load('900 70px "Montserrat"'),
+    ])
+      .then(() => { clearTimeout(timer); fontFamily = `"Montserrat", ${FALLBACK}`; done(); })
+      .catch(() => { clearTimeout(timer); done(); });
+  } catch { done(); }
+}
 
 export type Word = { w: string; start: number; end: number };
 

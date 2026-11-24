@@ -173,7 +173,7 @@ function Lights({ look }: { look: Look }) {
       <hemisphereLight args={[hemi.sky, hemi.ground, hemi.intensity]} />
       <ambientLight intensity={look.ambient ?? 0.15} />
       <directionalLight ref={ref} position={sun.pos} color={sun.color} intensity={sun.intensity} castShadow
-        shadow-mapSize={[4096, 4096]} shadow-bias={-0.0004} shadow-normalBias={0.03}
+        shadow-mapSize={[2048, 2048]} shadow-bias={-0.0004} shadow-normalBias={0.03}
         shadow-camera-left={-S} shadow-camera-right={S} shadow-camera-top={S} shadow-camera-bottom={-S} shadow-camera-near={0.5} shadow-camera-far={200} />
     </>
   );

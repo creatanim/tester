@@ -15,7 +15,7 @@
 ## التصيير (في Google Colab فقط — القانون المقدس)
 دفتر جاهز: `colab/render_colab.ipynb` — الخلايا بالترتيب، ثم الأمر:
 ```
-npx remotion render src/index.ts Railroads out/railroads_remake.mp4 --gl=swangle --concurrency=2
+npx remotion render src/index.ts Railroads out/railroads_remake.mp4 --gl=swangle --concurrency=2 --timeout=300000
 ```
 الناتج: `out/railroads_remake.mp4` — يُحفظ في Google Drive (مجلد "Why Perfect Railroads Remake") + التحميل على الجهاز.
 
