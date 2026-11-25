@@ -205,6 +205,12 @@ def add_track(prefix, x0, x1, zc, ballast=True, gaps=None):
 # build_scene — يبني المناطق الأربع
 # ============================================================
 def build_scene(plan, cards_dir, cam, target, rig):
+    # إثبات مصدر الرسم (GPU أم برمجي) — لأتأكد من عدم السقوط على llvmpipe
+    try:
+        import gpu
+        print("GL_RENDERER:", gpu.platform.renderer_get(), "|", gpu.platform.vendor_get(), flush=True)
+    except Exception as e:
+        print("GL_RENDERER: n/a", e, flush=True)
     state = {"zones": {"A": [], "B": [], "C": [], "D": []}, "wheels": [], "locoB": None, "trainC": None, "trainR": None, "lamps": []}
 
     def Z(zone, obj):
