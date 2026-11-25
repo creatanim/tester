@@ -1,0 +1,621 @@
+{
+ "schemaVersion": 2,
+ "title": "Why Perfect Railroads Don't Work (10s Sample)",
+ "description": "10-second replica sample: the hook — an engineer saws gaps into a railroad every 39 feet while two companies race along a bottomless canyon.",
+ "hashtags": [
+  "#shorts",
+  "#truestory",
+  "#railroads",
+  "#animation"
+ ],
+ "fps": 30,
+ "width": 1080,
+ "height": 1920,
+ "totalFrames": 300,
+ "voice": {
+  "provider": "fish-audio",
+  "model": "s2-pro",
+  "referenceId": "b0204e37cbc94a16954c78697b844af2"
+ },
+ "lightingChanges": 4,
+ "shots": [
+  {
+   "id": 1,
+   "a": 0,
+   "b": 80,
+   "light": "interior",
+   "camStart": [
+    -3.2,
+    1.7,
+    4.2
+   ],
+   "camEnd": [
+    2.4,
+    1.7,
+    4.2
+   ],
+   "lookAt": [
+    0,
+    1.15,
+    2.8
+   ],
+   "fov": 46,
+   "landFrames": [
+    72,
+    79
+   ],
+   "punchWords": [
+    "sawed",
+    "gaps",
+    "39"
+   ]
+  },
+  {
+   "id": 2,
+   "a": 80,
+   "b": 112,
+   "light": "day",
+   "camStart": [
+    6.2,
+    1.8,
+    156.5
+   ],
+   "camEnd": [
+    5.2,
+    1.8,
+    156.5
+   ],
+   "lookAt": [
+    6.2,
+    1.3,
+    153.4
+   ],
+   "fov": 38,
+   "landFrames": [
+    104,
+    111
+   ],
+   "punchWords": [
+    "companies"
+   ]
+  },
+  {
+   "id": 3,
+   "a": 112,
+   "b": 208,
+   "light": "day",
+   "camStart": [
+    -8.0,
+    9.5,
+    310.0
+   ],
+   "camEnd": [
+    6.5,
+    9.0,
+    311.0
+   ],
+   "lookAt": [
+    0,
+    2.5,
+    300.0
+   ],
+   "fov": 50,
+   "landFrames": [
+    198,
+    207
+   ],
+   "punchWords": [
+    "racing",
+    "canyon"
+   ]
+  },
+  {
+   "id": 4,
+   "a": 208,
+   "b": 254,
+   "light": "day",
+   "camStart": [
+    2.0,
+    10.5,
+    308.0
+   ],
+   "camEnd": [
+    2.0,
+    3.0,
+    307.0
+   ],
+   "lookAt": [
+    1.0,
+    1.0,
+    300.0
+   ],
+   "fov": 48,
+   "landFrames": [
+    244,
+    253
+   ],
+   "punchWords": [
+    "deep",
+    "bottom."
+   ]
+  },
+  {
+   "id": 5,
+   "a": 254,
+   "b": 300,
+   "light": "golden",
+   "camStart": [
+    -2.0,
+    2.2,
+    458.0
+   ],
+   "camEnd": [
+    -2.0,
+    6.2,
+    460.0
+   ],
+   "lookAt": [
+    -2.0,
+    1.5,
+    452.0
+   ],
+   "fov": 50,
+   "landFrames": [
+    286,
+    299
+   ],
+   "punchWords": [
+    "whoever",
+    "first",
+    "gets"
+   ]
+  }
+ ],
+ "actors": [
+  {
+   "id": "engineer",
+   "firstFaceSec": 0.0,
+   "pos": [
+    -0.4,
+    0,
+    2.6
+   ],
+   "radius": 0.36,
+   "height": 1.95,
+   "grounded": true,
+   "poseTransitions": [
+    {
+     "frame": 0,
+     "expr": "determined",
+     "mode": "crouch",
+     "note": "sawing gaps into the near rail"
+    },
+    {
+     "frame": 54,
+     "expr": "determined",
+     "mode": "stand",
+     "note": "keeps sawing as orange dawn light hits"
+    },
+    {
+     "frame": 96,
+     "expr": "meme_shock",
+     "mode": "stand",
+     "note": "peak beat: jumps back as locomotive 7 arrives"
+    }
+   ],
+   "blinkFrames": []
+  },
+  {
+   "id": "worker",
+   "firstFaceSec": 0.0,
+   "pos": [
+    3.2,
+    0,
+    2.8
+   ],
+   "radius": 0.36,
+   "height": 1.9,
+   "grounded": true,
+   "poseTransitions": [
+    {
+     "frame": 0,
+     "expr": "neutral",
+     "mode": "stand",
+     "note": "holds a lantern in the dark passage"
+    }
+   ],
+   "blinkFrames": []
+  },
+  {
+   "id": "surveyor",
+   "firstFaceSec": 8.9,
+   "pos": [
+    -2.6,
+    0,
+    447.5
+   ],
+   "radius": 0.36,
+   "height": 1.9,
+   "grounded": true,
+   "poseTransitions": [
+    {
+     "frame": 269,
+     "expr": "smug",
+     "mode": "stand",
+     "note": "on the rim, points across the desert"
+    }
+   ],
+   "blinkFrames": []
+  }
+ ],
+ "props": [
+  {
+   "id": "rails_a",
+   "keywords": [
+    "railroad"
+   ],
+   "aabb": [
+    -9.0,
+    0.0,
+    2.35,
+    9.0,
+    0.12,
+    3.95
+   ],
+   "grounded": true,
+   "visibleFrames": [
+    0,
+    80
+   ]
+  },
+  {
+   "id": "sawn_gap",
+   "keywords": [
+    "sawed",
+    "gaps",
+    "39"
+   ],
+   "aabb": [
+    -1.35,
+    0.02,
+    2.2,
+    -0.85,
+    0.12,
+    2.56
+   ],
+   "grounded": true,
+   "visibleFrames": [
+    0,
+    80
+   ]
+  },
+  {
+   "id": "dist_post",
+   "keywords": [
+    "39",
+    "feet."
+   ],
+   "aabb": [
+    1.45,
+    0.0,
+    4.1,
+    1.75,
+    2.1,
+    4.4
+   ],
+   "grounded": true,
+   "visibleFrames": [
+    0,
+    80
+   ]
+  },
+  {
+   "id": "wall_front",
+   "keywords": [
+    "see,"
+   ],
+   "aabb": [
+    -9.0,
+    0.0,
+    1.2,
+    9.0,
+    6.0,
+    1.7
+   ],
+   "grounded": true,
+   "visibleFrames": [
+    0,
+    80
+   ]
+  },
+  {
+   "id": "wall_back",
+   "keywords": [],
+   "aabb": [
+    -9.0,
+    0.0,
+    4.9,
+    9.0,
+    6.0,
+    5.4
+   ],
+   "grounded": true,
+   "visibleFrames": [
+    0,
+    80
+   ]
+  },
+  {
+   "id": "rails_b",
+   "keywords": [],
+   "aabb": [
+    -10.0,
+    0.0,
+    152.2,
+    12.0,
+    0.12,
+    153.8
+   ],
+   "grounded": true,
+   "visibleFrames": [
+    80,
+    112
+   ]
+  },
+  {
+   "id": "loco7",
+   "keywords": [
+    "companies"
+   ],
+   "aabb": [
+    3.2,
+    0.0,
+    151.5,
+    9.5,
+    4.6,
+    154.5
+   ],
+   "grounded": true,
+   "visibleFrames": [
+    80,
+    112
+   ]
+  },
+  {
+   "id": "mouth_arch",
+   "keywords": [],
+   "aabb": [
+    -4.0,
+    0.0,
+    149.0,
+    10.0,
+    8.0,
+    150.6
+   ],
+   "grounded": true,
+   "visibleFrames": [
+    80,
+    112
+   ]
+  },
+  {
+   "id": "canyon_west_n",
+   "keywords": [
+    "canyon",
+    "deep"
+   ],
+   "aabb": [
+    -40.0,
+    -2.0,
+    270.0,
+    -6.5,
+    26.0,
+    297.5
+   ],
+   "grounded": false,
+   "visibleFrames": [
+    112,
+    254
+   ]
+  },
+  {
+   "id": "canyon_west_s",
+   "keywords": [],
+   "aabb": [
+    -40.0,
+    -2.0,
+    302.5,
+    -6.5,
+    26.0,
+    330.0
+   ],
+   "grounded": false,
+   "visibleFrames": [
+    112,
+    254
+   ]
+  },
+  {
+   "id": "canyon_east_n",
+   "keywords": [
+    "canyon",
+    "bottom."
+   ],
+   "aabb": [
+    6.5,
+    -2.0,
+    270.0,
+    40.0,
+    26.0,
+    297.5
+   ],
+   "grounded": false,
+   "visibleFrames": [
+    112,
+    254
+   ]
+  },
+  {
+   "id": "canyon_east_s",
+   "keywords": [],
+   "aabb": [
+    6.5,
+    -2.0,
+    302.5,
+    40.0,
+    26.0,
+    330.0
+   ],
+   "grounded": false,
+   "visibleFrames": [
+    112,
+    254
+   ]
+  },
+  {
+   "id": "trestle_bridge",
+   "keywords": [
+    "racing"
+   ],
+   "aabb": [
+    -9.0,
+    -2.0,
+    297.8,
+    9.0,
+    2.8,
+    302.2
+   ],
+   "grounded": false,
+   "visibleFrames": [
+    112,
+    254
+   ]
+  },
+  {
+   "id": "river",
+   "keywords": [
+    "deep",
+    "bottom."
+   ],
+   "aabb": [
+    -8.0,
+    -2.05,
+    280.0,
+    8.0,
+    -2.0,
+    320.0
+   ],
+   "grounded": false,
+   "visibleFrames": [
+    112,
+    254
+   ]
+  },
+  {
+   "id": "train_c",
+   "keywords": [
+    "racing"
+   ],
+   "aabb": [
+    -8.5,
+    2.9,
+    298.0,
+    0.5,
+    7.2,
+    302.0
+   ],
+   "grounded": false,
+   "visibleFrames": [
+    112,
+    254
+   ]
+  },
+  {
+   "id": "train_rival",
+   "keywords": [
+    "racing"
+   ],
+   "aabb": [
+    1.5,
+    2.9,
+    298.0,
+    10.5,
+    7.2,
+    302.0
+   ],
+   "grounded": false,
+   "visibleFrames": [
+    112,
+    254
+   ]
+  },
+  {
+   "id": "rim_ledge",
+   "keywords": [
+    "can't"
+   ],
+   "aabb": [
+    -10.0,
+    0.0,
+    446.0,
+    8.0,
+    0.12,
+    454.0
+   ],
+   "grounded": true,
+   "visibleFrames": [
+    254,
+    300
+   ]
+  },
+  {
+   "id": "desert_dunes",
+   "keywords": [
+    "whoever",
+    "first",
+    "gets"
+   ],
+   "aabb": [
+    -40.0,
+    0.0,
+    430.0,
+    40.0,
+    6.0,
+    444.0
+   ],
+   "grounded": true,
+   "visibleFrames": [
+    254,
+    300
+   ]
+  },
+  {
+   "id": "finish_banner",
+   "keywords": [
+    "finishes",
+    "first",
+    "gets"
+   ],
+   "aabb": [
+    -3.4,
+    3.2,
+    444.5,
+    3.4,
+    5.2,
+    444.9
+   ],
+   "grounded": false,
+   "visibleFrames": [
+    254,
+    300
+   ]
+  }
+ ],
+ "flags": {
+  "poseSnapNoIdleBounce": true,
+  "staticBeatFaces": true,
+  "noBlinkWhileSpeaking": true,
+  "postGrainMax": 0.006,
+  "noInkCards": true
+ }
+}
